@@ -30,11 +30,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`localidad` (
   `localidad_id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
-  `provincia_provincia_id` INT NOT NULL,
-  PRIMARY KEY (`localidad_id`, `provincia_provincia_id`),
-  INDEX `fk_localidad_provincia1_idx` (`provincia_provincia_id` ASC) VISIBLE,
+  `provincia_id` INT NOT NULL,
+  PRIMARY KEY (`localidad_id`, `provincia_id`),
+  INDEX `fk_localidad_provincia1_idx` (`provincia_id` ASC) VISIBLE,
   CONSTRAINT `fk_localidad_provincia1`
-    FOREIGN KEY (`provincia_provincia_id`)
+    FOREIGN KEY (`provincia_id`)
     REFERENCES `n1exercici2_pizzeria`.`provincia` (`provincia_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -46,26 +46,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`cliente` (
   `cliente_id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `apellidos` VARCHAR(45) NOT NULL,
-  `direccion` VARCHAR(45) NOT NULL,
-  `codigo_postal` INT(5) NOT NULL,
-  `localidad` INT NOT NULL,
-  `provincia` INT NOT NULL,
-  `telefono` DECIMAL(9) NULL,
+  `nombre` VARCHAR(45) NULL,
+  `apellidos` VARCHAR(45) NULL,
+  `direccion` VARCHAR(45) NULL,
+  `codigo_postal` VARCHAR(5) NULL,
+  `localidad_id` INT NULL,
+  `telefono` VARCHAR(9) NULL,
   PRIMARY KEY (`cliente_id`),
-  INDEX `fk_cliente_provincia1_idx` (`provincia` ASC) VISIBLE,
-  INDEX `fk_cliente_localidad1_idx` (`localidad` ASC) VISIBLE,
-  CONSTRAINT `fk_cliente_provincia1`
-    FOREIGN KEY (`provincia`)
-    REFERENCES `n1exercici2_pizzeria`.`provincia` (`provincia_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+  INDEX `fk_cliente_localidad1_idx` (`localidad_id` ASC) VISIBLE,
   CONSTRAINT `fk_cliente_localidad1`
-    FOREIGN KEY (`localidad`)
+    FOREIGN KEY (`localidad_id`)
     REFERENCES `n1exercici2_pizzeria`.`localidad` (`localidad_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `chk_telefono_cliente` CHECK (`telefono` REGEXP '^[0-9]{9}$'),
+  CONSTRAINT `chk_codigo_postal_cliente` CHECK (`codigo_postal` REGEXP '^[0-9]{5}$'))
 ENGINE = InnoDB;
 
 
@@ -73,24 +68,18 @@ ENGINE = InnoDB;
 -- Table `n1exercici2_pizzeria`.`tienda`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`tienda` (
-  `tienda_id` INT NOT NULL,
+  `tienda_id` INT NOT NULL AUTO_INCREMENT,
   `direccion` VARCHAR(45) NULL,
-  `codigo_postal` INT(5) NULL,
-  `provincia_id` INT NOT NULL,
+  `codigo_postal` VARCHAR(5) NULL,
   `localidad_id` INT NOT NULL,
   PRIMARY KEY (`tienda_id`),
-  INDEX `fk_tienda_provincia1_idx` (`provincia_id` ASC) VISIBLE,
   INDEX `fk_tienda_localidad1_idx` (`localidad_id` ASC) VISIBLE,
-  CONSTRAINT `fk_tienda_provincia1`
-    FOREIGN KEY (`provincia_id`)
-    REFERENCES `n1exercici2_pizzeria`.`provincia` (`provincia_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
   CONSTRAINT `fk_tienda_localidad1`
     FOREIGN KEY (`localidad_id`)
     REFERENCES `n1exercici2_pizzeria`.`localidad` (`localidad_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `chk_codigo_postal_tienda` CHECK (`codigo_postal` REGEXP '^[0-9]{5}$'))
 ENGINE = InnoDB;
 
 
@@ -102,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`trabajador` (
   `nombre` VARCHAR(45) NOT NULL,
   `apellidos` VARCHAR(45) NOT NULL,
   `nif` VARCHAR(9) NOT NULL,
-  `telefono` INT(9) NOT NULL,
+  `telefono` VARCHAR(9) NOT NULL,
   `puesto` ENUM('cocinero', 'repartidor') NOT NULL,
   `tienda_id` INT NOT NULL,
   PRIMARY KEY (`trabajador_id`, `tienda_id`),
@@ -111,7 +100,9 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`trabajador` (
     FOREIGN KEY (`tienda_id`)
     REFERENCES `n1exercici2_pizzeria`.`tienda` (`tienda_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `chk_telefono_trabajador` CHECK (`telefono` REGEXP '^[0-9]{9}$'),
+  CONSTRAINT `chk_nif_trabajador` CHECK (`nif` REGEXP '^[0-9]{8}[A-Z]$' OR `nif` REGEXP '^[A-Z][0-9]{7}[A-Z]$'))
 ENGINE = InnoDB;
 
 
@@ -121,11 +112,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`pedido` (
   `pedido_id` INT NOT NULL AUTO_INCREMENT,
   `fecha_hora` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `tipo` ENUM('reparto', 'recogida') NULL,
-  `precio` FLOAT NULL,
+  `tipo` ENUM('reparto', 'recogida') NOT NULL,
+  `precio` DECIMAL(6,2) NOT NULL,
   `cliente_id` INT NOT NULL,
   `tienda_id` INT NOT NULL,
-  `trabajador_id` INT NOT NULL,
+  `trabajador_id` INT NULL,
   `fecha_hora_entrega` DATETIME NULL,
   PRIMARY KEY (`pedido_id`, `cliente_id`, `tienda_id`),
   INDEX `fk_pedido_trabajador1_idx` (`trabajador_id` ASC) VISIBLE,
@@ -168,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`producto` (
   `nombre` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(200) NULL,
   `imagen` VARCHAR(45) NULL,
-  `precio` FLOAT NULL,
+  `precio` DECIMAL(4,2) NOT NULL,
   `categoriaPizza_id` INT NULL,
   PRIMARY KEY (`producto_id`),
   INDEX `fk_producto_categoriaPizza1_idx` (`categoriaPizza_id` ASC) VISIBLE,
@@ -210,9 +201,9 @@ CREATE TRIGGER check_is_reparto
 BEFORE UPDATE ON pedido
 FOR EACH ROW
 BEGIN
-	IF (NEW.tipo <> 'reparto' AND (trabajador_id <> NULL OR fecha_hora_entrega <> NULL)) THEN
+	IF (NEW.tipo <> 'reparto' AND (NEW.trabajador_id IS NOT NULL OR NEW.fecha_hora_entrega IS NOT NULL)) THEN
 		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'trabajador_id y feha de entrega solo permitidas para productos de reparto';
+		SET MESSAGE_TEXT = 'trabajador_id y fecha de entrega solo asignables a pedidos de reparto';
 	END IF;
 END;$$
 
