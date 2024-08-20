@@ -57,23 +57,13 @@ CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`marca` (
   `marca_id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `proveedor_id` INT NOT NULL,
-  PRIMARY KEY (`marca_id`),
-  INDEX `fk_marca_proveedor_idx` (`proveedor_id` ASC) VISIBLE,
-  CONSTRAINT `fk_marca_proveedor`
+  PRIMARY KEY (`marca_id`, `proveedor_id`),
+  INDEX `fk_proveedor1_idx` (`proveedor_id` ASC) VISIBLE,
+  CONSTRAINT `fk_proveedor1`
     FOREIGN KEY (`proveedor_id`)
     REFERENCES `n1_exercici1_optica`.`proveedor` (`proveedor_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `n1_exercici1_optica`.`montura`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`montura` (
-  `montura_id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`montura_id`))
 ENGINE = InnoDB;
 
 
@@ -83,24 +73,18 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`gafas` (
   `gafas_id` INT NOT NULL AUTO_INCREMENT,
   `marca_id` INT NOT NULL,
-  `montura_id` INT NOT NULL,
+  `montura` ENUM('pasta', 'flotante', 'metalica') NULL,
   `graduacion_derecho` VARCHAR(20) NULL,
   `graduacion_izquierdo` VARCHAR(20) NULL,
   `color_montura` VARCHAR(20) NULL,
   `color_derecho` VARCHAR(20) NULL,
   `color_izquierdo` VARCHAR(20) NULL,
   `precio` FLOAT NULL,
-  PRIMARY KEY (`gafas_id`),
-  INDEX `fk_gafas_marca1_idx` (`marca_id` ASC) INVISIBLE,
-  INDEX `fk_gafas_montura1_idx` (`montura_id` ASC) VISIBLE,
-  CONSTRAINT `fk_gafas_marca1`
+  PRIMARY KEY (`gafas_id`, `marca_id`),
+  INDEX `fk_marca1_idx` (`marca_id` ASC) VISIBLE,
+  CONSTRAINT `fk_marca1`
     FOREIGN KEY (`marca_id`)
     REFERENCES `n1_exercici1_optica`.`marca` (`marca_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_gafas_montura1`
-    FOREIGN KEY (`montura_id`)
-    REFERENCES `n1_exercici1_optica`.`montura` (`montura_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -149,25 +133,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`venta` (
   `venta_id` INT NOT NULL AUTO_INCREMENT,
   `gafas_gafas_id` INT NOT NULL,
-  `cliente_cliente_id` INT NOT NULL,
-  `empleado_empleado_id` INT NOT NULL,
-  PRIMARY KEY (`venta_id`, `gafas_gafas_id`),
+  `cliente_id` INT NOT NULL,
+  `empleado_id` INT NOT NULL,
+  PRIMARY KEY (`venta_id`, `gafas_gafas_id`, `cliente_id`, `empleado_id`),
   INDEX `fk_venta_gafas1_idx` (`gafas_gafas_id` ASC) VISIBLE,
-  INDEX `fk_venta_empleado1_idx` (`empleado_empleado_id` ASC) INVISIBLE,
-  INDEX `fk_venta_cliente1_idx` (`cliente_cliente_id` ASC) VISIBLE,
+  INDEX `fk_cliente1_idx` (`cliente_id` ASC) VISIBLE,
+  INDEX `fk_empleado1_idx` (`empleado_id` ASC) VISIBLE,
   CONSTRAINT `fk_venta_gafas1`
     FOREIGN KEY (`gafas_gafas_id`)
     REFERENCES `n1_exercici1_optica`.`gafas` (`gafas_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_venta_empleado1`
-    FOREIGN KEY (`empleado_empleado_id`)
-    REFERENCES `n1_exercici1_optica`.`empleado` (`empleado_id`)
+  CONSTRAINT `fk_cliente1`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `n1_exercici1_optica`.`cliente` (`cliente_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_venta_cliente1`
-    FOREIGN KEY (`cliente_cliente_id`)
-    REFERENCES `n1_exercici1_optica`.`cliente` (`cliente_id`)
+  CONSTRAINT `fk_empleado1`
+    FOREIGN KEY (`empleado_id`)
+    REFERENCES `n1_exercici1_optica`.`empleado` (`empleado_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
