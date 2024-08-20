@@ -15,16 +15,6 @@ CREATE SCHEMA IF NOT EXISTS `spotify` DEFAULT CHARACTER SET utf8mb4 ;
 USE `spotify` ;
 
 -- -----------------------------------------------------
--- Table `spotify`.`subscriptionType`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `spotify`.`subscriptionType` (
-  `subscriptionType_id` INT NOT NULL,
-  `name` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`subscriptionType_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `spotify`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `spotify`.`user` (
@@ -36,28 +26,22 @@ CREATE TABLE IF NOT EXISTS `spotify`.`user` (
   `gender` VARCHAR(1) NOT NULL COMMENT 'Possible values:\n\'M\' = male\n\'F\' = female',
   `country` VARCHAR(2) NOT NULL,
   `zip_code` VARCHAR(10) NOT NULL,
-  `subscriptionType_id` INT NOT NULL,
+  `suscription_type` ENUM('free', 'premium') NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  INDEX `fk_subscriptionType_idx` (`subscriptionType_id` ASC) VISIBLE,
-  CONSTRAINT `fk_subscriptionType`
-    FOREIGN KEY (`subscriptionType_id`)
-    REFERENCES `spotify`.`subscriptionType` (`subscriptionType_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `spotify`.`subscription_details`
+-- Table `spotify`.`subscription`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `spotify`.`subscription_details` (
-  `subscription_details_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `spotify`.`subscription` (
+  `subscription_id` INT NOT NULL,
   `date_of_creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_of_renovation` DATETIME NULL,
   `payment_method` ENUM('paypal', 'credit_card') NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`subscription_details_id`, `user_id`),
+  PRIMARY KEY (`subscription_id`, `user_id`),
   INDEX `fk_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user1`
     FOREIGN KEY (`user_id`)
@@ -73,15 +57,15 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `spotify`.`credit_card` (
   `credit_card_id` INT NOT NULL,
   `number` INT NOT NULL,
-  `month` INT(2) NULL,
-  `year` INT(2) NOT NULL,
-  `cvv` INT(3) NOT NULL,
-  `subscription_details_id` INT NOT NULL,
-  PRIMARY KEY (`credit_card_id`, `subscription_details_id`),
-  INDEX `fk_subscription_details1_idx` (`subscription_details_id` ASC) VISIBLE,
+  `month` INT NULL,
+  `year` INT NOT NULL,
+  `cvv` VARCHAR(3) NOT NULL,
+  `subscription_id` INT NOT NULL,
+  PRIMARY KEY (`credit_card_id`, `subscription_id`),
+  INDEX `fk_subscription_details1_idx` (`subscription_id` ASC) VISIBLE,
   CONSTRAINT `fk_subscription_details1`
-    FOREIGN KEY (`subscription_details_id`)
-    REFERENCES `spotify`.`subscription_details` (`subscription_details_id`)
+    FOREIGN KEY (`subscription_id`)
+    REFERENCES `spotify`.`subscription` (`subscription_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -93,12 +77,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `spotify`.`paypal` (
   `paypal_id` INT NOT NULL,
   `user` VARCHAR(45) NOT NULL,
-  `subscription_details_id` INT NOT NULL,
-  PRIMARY KEY (`paypal_id`, `subscription_details_id`),
-  INDEX `fk_subscription_details2_idx` (`subscription_details_id` ASC) VISIBLE,
+  `subscription_id` INT NOT NULL,
+  PRIMARY KEY (`paypal_id`, `subscription_id`),
+  INDEX `fk_subscription_details2_idx` (`subscription_id` ASC) VISIBLE,
   CONSTRAINT `fk_subscription_details2`
-    FOREIGN KEY (`subscription_details_id`)
-    REFERENCES `spotify`.`subscription_details` (`subscription_details_id`)
+    FOREIGN KEY (`subscription_id`)
+    REFERENCES `spotify`.`subscription` (`subscription_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -111,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`payment` (
   `payment_id` INT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `order_number` INT NOT NULL,
-  `total` FLOAT NOT NULL,
+  `total` DECIMAL(4,2) NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`payment_id`, `user_id`),
   UNIQUE INDEX `order_number_UNIQUE` (`order_number` ASC) VISIBLE,
@@ -201,11 +185,11 @@ CREATE TABLE IF NOT EXISTS `spotify`.`playlist_has_song` (
   `playlist_id` INT NOT NULL,
   `song_id` INT NOT NULL,
   `date_added` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`playlist_id`, `song_id`, `user_id`),
+  `added_by_user_id` INT NOT NULL,
+  PRIMARY KEY (`playlist_id`, `song_id`, `added_by_user_id`),
   INDEX `fk_song1_idx` (`song_id` ASC) VISIBLE,
   INDEX `fk_playlist1_idx` (`playlist_id` ASC) VISIBLE,
-  INDEX `fk_user4_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_user4_idx` (`added_by_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_playlist1`
     FOREIGN KEY (`playlist_id`)
     REFERENCES `spotify`.`playlist` (`playlist_id`)
@@ -217,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`playlist_has_song` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user4`
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`added_by_user_id`)
     REFERENCES `spotify`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -228,18 +212,18 @@ ENGINE = InnoDB;
 -- Table `spotify`.`related_artists`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `spotify`.`related_artists` (
-  `artist_id` INT NOT NULL,
-  `artist_id1` INT NOT NULL,
-  PRIMARY KEY (`artist_id`, `artist_id1`),
-  INDEX `fk_artist3_idx` (`artist_id1` ASC) VISIBLE,
-  INDEX `fk_artist2_idx` (`artist_id` ASC) VISIBLE,
+  `artist1_id` INT NOT NULL,
+  `artist2_id` INT NOT NULL,
+  PRIMARY KEY (`artist1_id`, `artist2_id`),
+  INDEX `fk_artist3_idx` (`artist2_id` ASC) VISIBLE,
+  INDEX `fk_artist2_idx` (`artist1_id` ASC) VISIBLE,
   CONSTRAINT `fk_artist2`
-    FOREIGN KEY (`artist_id`)
+    FOREIGN KEY (`artist1_id`)
     REFERENCES `spotify`.`artist` (`artist_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_artist3`
-    FOREIGN KEY (`artist_id1`)
+    FOREIGN KEY (`artist2_id`)
     REFERENCES `spotify`.`artist` (`artist_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
