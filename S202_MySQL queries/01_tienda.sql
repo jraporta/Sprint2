@@ -14,7 +14,7 @@ SELECT nombre FROM fabricante ORDER BY nombre;
 SELECT nombre FROM fabricante ORDER BY nombre desc;
 SELECT nombre, precio FROM producto ORDER BY nombre, precio desc;
 SELECT * FROM fabricante LIMIT 5;
-SELECT * FROM fabricante LIMIT 4, 2;
+SELECT * FROM fabricante LIMIT 3, 2;
 SELECT nombre, precio FROM producto ORDER BY precio LIMIT 1;
 SELECT nombre, precio FROM producto ORDER BY precio DESC LIMIT 1;
 SELECT nombre FROM producto WHERE codigo_fabricante = 2;
@@ -24,15 +24,18 @@ SELECT p.codigo, p.nombre, f.codigo, f.nombre FROM producto p JOIN fabricante f 
 SELECT p.nombre, p.precio, f.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo ORDER BY p.precio LIMIT 1;
 SELECT p.nombre, p.precio, f.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo ORDER BY p.precio DESC LIMIT 1;
 SELECT * FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'lenovo';
-SELECT * FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'cucial' AND p.precio > 200;
+SELECT * FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'crucial' AND p.precio > 200;
 SELECT * FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'asus' OR f.nombre = 'hewlett-packard' OR f.nombre = 'seagate';
 SELECT * FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre IN ('asus', 'hewlett-packard', 'seagate');
 SELECT p.nombre, p.precio FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre LIKE('%e');
 SELECT p.nombre, p.precio FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre LIKE('%w%');
-
-
-
-
-
-
-
+SELECT p.nombre, p.precio, f.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE p.precio >= 180 ORDER BY p.precio DESC, p.nombre ASC;
+SELECT DISTINCT f.codigo, f.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo;
+SELECT f.nombre, COUNT(p.codigo) AS productos FROM fabricante f LEFT JOIN producto p ON f.codigo = p.codigo_fabricante GROUP BY f.nombre;
+SELECT f.nombre FROM fabricante f LEFT JOIN producto p ON f.codigo = p.codigo_fabricante GROUP BY f.nombre HAVING COUNT(p.codigo) = 0;
+SELECT nombre FROM producto WHERE codigo_fabricante = (SELECT DISTINCT codigo FROM fabricante WHERE nombre = "lenovo");
+SELECT * FROM producto WHERE precio = (SELECT precio FROM producto WHERE codigo_fabricante = (SELECT DISTINCT codigo FROM fabricante WHERE nombre = "lenovo") ORDER BY precio DESC LIMIT 1);
+SELECT p.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'lenovo' ORDER BY p.precio DESC LIMIT 1;
+SELECT p.nombre FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'hewlett-packard' ORDER BY p.precio LIMIT 1;
+SELECT * FROM producto WHERE precio >= (SELECT p.precio FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'lenovo' ORDER BY p.precio DESC LIMIT 1);
+WITH producto_ASUS AS (SELECT p.codigo, p.nombre, p.precio, f.nombre AS fabricante FROM producto p JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre = 'asus') SELECT * FROM producto_ASUS WHERE precio > (SELECT AVG(precio) FROM producto_ASUS);
