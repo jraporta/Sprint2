@@ -371,11 +371,26 @@
 					"estimatedSize": "",
 					"any": "",
 					"fk": true
+				},
+				{
+					"id": "e6697f00-a8d8-4af9-a001-0885a95cb7a2",
+					"name": "sales",
+					"datatype": "d743d756-d7f7-48fa-bf6b-99214fb315ad",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": true,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": ""
 				}
 			],
 			"relations": [
-				"9bfcf553-6519-4313-b10c-f8d22560d749",
-				"0f16fa99-c102-402a-988e-090c8d8c1007"
+				"9bfcf553-6519-4313-b10c-f8d22560d749"
 			],
 			"lines": [],
 			"keys": [
@@ -671,22 +686,6 @@
 					"fk": false
 				},
 				{
-					"id": "d5e977df-b05e-4098-885c-231aa2cd63d2",
-					"name": "sales",
-					"datatype": "c47f2340-c59f-4fe5-89c4-f554d7fab76a",
-					"param": "",
-					"pk": false,
-					"nn": false,
-					"list": true,
-					"comment": "",
-					"data": "",
-					"enum": "",
-					"validation": "",
-					"pattern": false,
-					"estimatedSize": "",
-					"any": ""
-				},
-				{
 					"id": "7932389f-478b-4760-9fc1-c78cf849980d",
 					"name": "registration_date",
 					"datatype": "date",
@@ -722,7 +721,8 @@
 				}
 			],
 			"relations": [
-				"64813162-cbb3-40d7-a402-6b6310f04001"
+				"64813162-cbb3-40d7-a402-6b6310f04001",
+				"ecacbaa5-a1bb-46f0-9dd7-5296d7ba45ac"
 			],
 			"lines": [],
 			"keys": [
@@ -755,114 +755,16 @@
 			"capped": false,
 			"autoIndexId": true
 		},
-		"c47f2340-c59f-4fe5-89c4-f554d7fab76a": {
-			"id": "c47f2340-c59f-4fe5-89c4-f554d7fab76a",
+		"d743d756-d7f7-48fa-bf6b-99214fb315ad": {
+			"id": "d743d756-d7f7-48fa-bf6b-99214fb315ad",
 			"visible": false,
 			"name": "object",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "e9119209-361d-4e82-8479-586c5d12983e",
-					"name": "employee",
-					"datatype": "8314f901-3175-4fa1-8487-996f76b324a7",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"list": false,
-					"comment": "",
-					"data": "",
-					"enum": "",
-					"validation": "",
-					"pattern": false,
-					"estimatedSize": "",
-					"any": ""
-				},
-				{
-					"id": "19db9d8d-c546-4633-bedb-d453d0f8293c",
-					"name": "date",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"list": false,
-					"comment": "",
-					"data": "",
-					"enum": "",
-					"validation": "",
-					"pattern": false,
-					"estimatedSize": "",
-					"any": ""
-				},
-				{
-					"id": "33cbdb0a-2ae5-40b3-a232-76c5cf0e227e",
-					"name": "glasses",
-					"datatype": "ada560f2-f58f-4364-b01d-353ba807ed82",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"list": false,
-					"comment": "",
-					"data": "",
-					"enum": "",
-					"validation": "",
-					"pattern": false,
-					"estimatedSize": "",
-					"any": ""
-				},
-				{
-					"id": "f3f5a2d5-b2c1-4afa-991a-cc9f92ff098e",
-					"name": "price",
-					"datatype": "decimal",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"list": false,
-					"comment": "",
-					"data": "",
-					"enum": "",
-					"validation": "",
-					"pattern": false,
-					"estimatedSize": "",
-					"any": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "bc19a34a-505c-4d11-8d63-2ba0dc1f1674",
-					"name": "Primary key",
-					"isPk": true,
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"customCode": "",
-			"beforeScript": "",
-			"afterScript": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": "",
-			"size": "",
-			"max": "",
-			"validation": "",
-			"capped": false
-		},
-		"ada560f2-f58f-4364-b01d-353ba807ed82": {
-			"id": "ada560f2-f58f-4364-b01d-353ba807ed82",
-			"visible": false,
-			"name": "object",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "cee56c3f-e359-4cb9-8e04-fff37ca68200",
-					"name": "model_id",
+					"id": "9d389162-6ef6-4740-9bc7-e78ab0580dd5",
+					"name": "client",
 					"datatype": "objectId",
 					"param": "",
 					"pk": false,
@@ -878,12 +780,12 @@
 					"fk": true
 				},
 				{
-					"id": "ebc42621-265a-48d6-bb71-6ee020c5e432",
-					"name": "lens_graduation",
-					"datatype": "6a036e94-07e6-4c4f-a274-81b0a1f562a7",
+					"id": "5b3b4085-af65-498a-b53d-511b87dc9d34",
+					"name": "employee",
+					"datatype": "4310aac1-6ad8-42ea-83b0-fb44a4da23f6",
 					"param": "",
 					"pk": false,
-					"nn": false,
+					"nn": true,
 					"list": false,
 					"comment": "",
 					"data": "",
@@ -891,15 +793,16 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				},
 				{
-					"id": "49646e7a-586d-4af7-8ff8-99f1dc62ff00",
-					"name": "lens_color",
-					"datatype": "21a582cb-4625-4e4d-95e0-7be4b7cc2667",
+					"id": "e099ae2e-c874-4f28-b6bb-e4691b087320",
+					"name": "details",
+					"datatype": "c6979627-9983-41ff-8950-5080d6825e56",
 					"param": "",
 					"pk": false,
-					"nn": false,
+					"nn": true,
 					"list": false,
 					"comment": "",
 					"data": "",
@@ -907,15 +810,16 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				},
 				{
-					"id": "ebdff930-4c9e-4439-9b80-583b21984fdd",
-					"name": "frame_color",
-					"datatype": "string",
+					"id": "b77735a1-d59a-43ff-8061-4c0a85801991",
+					"name": "date",
+					"datatype": "date",
 					"param": "",
 					"pk": false,
-					"nn": false,
+					"nn": true,
 					"list": false,
 					"comment": "",
 					"data": "",
@@ -923,16 +827,17 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				}
 			],
 			"relations": [
-				"0f16fa99-c102-402a-988e-090c8d8c1007"
+				"ecacbaa5-a1bb-46f0-9dd7-5296d7ba45ac"
 			],
 			"lines": [],
 			"keys": [
 				{
-					"id": "fe18f78e-3542-493d-977d-c27622be8809",
+					"id": "7fa4e074-7ced-4c93-aa53-7ec247bfcdba",
 					"name": "Primary key",
 					"isPk": true,
 					"cols": []
@@ -954,15 +859,15 @@
 			"validation": "",
 			"capped": false
 		},
-		"8314f901-3175-4fa1-8487-996f76b324a7": {
-			"id": "8314f901-3175-4fa1-8487-996f76b324a7",
+		"4310aac1-6ad8-42ea-83b0-fb44a4da23f6": {
+			"id": "4310aac1-6ad8-42ea-83b0-fb44a4da23f6",
 			"visible": false,
 			"name": "object",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "ebc1c38f-662f-4bf5-af0e-eef745e5af65",
+					"id": "a016284b-5594-4636-a65e-81672193890c",
 					"name": "name",
 					"datatype": "string",
 					"param": "",
@@ -975,10 +880,11 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				},
 				{
-					"id": "aecae553-8db9-40f4-8391-4d149ca7f613",
+					"id": "1f4454be-405a-4cfd-9be7-3e03f38dcdf7",
 					"name": "telephone",
 					"datatype": "string",
 					"param": "",
@@ -991,14 +897,15 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				}
 			],
 			"relations": [],
 			"lines": [],
 			"keys": [
 				{
-					"id": "12e47631-5d0b-4a5d-8f71-2b5a589c4e5d",
+					"id": "87bf6217-2f89-4db8-8616-cb7cc19c8df7",
 					"name": "Primary key",
 					"isPk": true,
 					"cols": []
@@ -1020,17 +927,17 @@
 			"validation": "",
 			"capped": false
 		},
-		"6a036e94-07e6-4c4f-a274-81b0a1f562a7": {
-			"id": "6a036e94-07e6-4c4f-a274-81b0a1f562a7",
+		"c6979627-9983-41ff-8950-5080d6825e56": {
+			"id": "c6979627-9983-41ff-8950-5080d6825e56",
 			"visible": false,
 			"name": "object",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "2f942829-174f-4cfb-a773-46f8b3e12b2a",
-					"name": "right",
-					"datatype": "string",
+					"id": "32eba581-56a3-466d-92c1-ee3c02d0ae79",
+					"name": "lens_graduation",
+					"datatype": "30370532-dd3f-424d-9db1-f7668f507365",
 					"param": "",
 					"pk": false,
 					"nn": false,
@@ -1041,11 +948,29 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				},
 				{
-					"id": "1bd82b02-a568-47cf-b092-cfbdc664ffeb",
-					"name": "left",
+					"id": "bc897036-2ada-4610-81df-fa3229b44f27",
+					"name": "lens_color",
+					"datatype": "afd4a1cb-a6bb-47f8-ab43-8f3de8f0dddc",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": false
+				},
+				{
+					"id": "fd66ea78-ffa3-4c58-aca2-c4a17abc2a42",
+					"name": "frame_color",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -1057,14 +982,15 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				}
 			],
 			"relations": [],
 			"lines": [],
 			"keys": [
 				{
-					"id": "66271bb6-991d-46dd-b9ec-8ad64c8d2716",
+					"id": "171085b7-d823-4111-8719-179a901871e0",
 					"name": "Primary key",
 					"isPk": true,
 					"cols": []
@@ -1086,15 +1012,15 @@
 			"validation": "",
 			"capped": false
 		},
-		"21a582cb-4625-4e4d-95e0-7be4b7cc2667": {
-			"id": "21a582cb-4625-4e4d-95e0-7be4b7cc2667",
+		"30370532-dd3f-424d-9db1-f7668f507365": {
+			"id": "30370532-dd3f-424d-9db1-f7668f507365",
 			"visible": false,
 			"name": "object",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "637873ce-210d-4682-9e72-f4b091716236",
+					"id": "eabd3ded-c903-4ca2-9239-4666d1bdb71a",
 					"name": "right",
 					"datatype": "string",
 					"param": "",
@@ -1107,10 +1033,11 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				},
 				{
-					"id": "bfeae823-94e5-44a6-85fc-efebf0e0edc5",
+					"id": "43881820-ec7a-466f-9363-e8e95beefd5f",
 					"name": "left",
 					"datatype": "string",
 					"param": "",
@@ -1123,14 +1050,83 @@
 					"validation": "",
 					"pattern": false,
 					"estimatedSize": "",
-					"any": ""
+					"any": "",
+					"fk": false
 				}
 			],
 			"relations": [],
 			"lines": [],
 			"keys": [
 				{
-					"id": "30bb282c-8f54-4a94-9cba-5d1eaf37d9bb",
+					"id": "8cf35e6d-ee7c-425f-bf7f-e575a39d7438",
+					"name": "Primary key",
+					"isPk": true,
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"beforeScript": "",
+			"afterScript": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": "",
+			"size": "",
+			"max": "",
+			"validation": "",
+			"capped": false
+		},
+		"afd4a1cb-a6bb-47f8-ab43-8f3de8f0dddc": {
+			"id": "afd4a1cb-a6bb-47f8-ab43-8f3de8f0dddc",
+			"visible": false,
+			"name": "object",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2fd1b0a1-6923-465b-8251-bd62bf47be6f",
+					"name": "right",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": false
+				},
+				{
+					"id": "276a3a21-08cc-46a1-a948-7eb460cadd81",
+					"name": "left",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": false,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": false
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "62ddfc33-b9e1-4d71-9bf8-66bfa20b3bf1",
 					"name": "Primary key",
 					"isPk": true,
 					"cols": []
@@ -1166,7 +1162,7 @@
 			"c_mp": "true",
 			"c_mch": "true",
 			"c_p": "one",
-			"c_ch": "many",
+			"c_ch": "one",
 			"c_cp": "",
 			"c_cch": "",
 			"cols": [
@@ -1208,26 +1204,26 @@
 			"customCode": "",
 			"relationColor": "transparent"
 		},
-		"0f16fa99-c102-402a-988e-090c8d8c1007": {
-			"id": "0f16fa99-c102-402a-988e-090c8d8c1007",
+		"ecacbaa5-a1bb-46f0-9dd7-5296d7ba45ac": {
+			"id": "ecacbaa5-a1bb-46f0-9dd7-5296d7ba45ac",
 			"visible": true,
-			"name": "glasses_model_id",
+			"name": "client_client",
 			"desc": "",
 			"type": "identifying",
-			"parent_key": "bef58ec4-482f-4d0c-9b3b-a40dc0d732d9",
-			"parent": "fc439eb3-36fb-4c31-a251-af1e0bb6d97d",
-			"child": "ada560f2-f58f-4364-b01d-353ba807ed82",
+			"parent_key": "745bdffc-3157-48ca-87c0-5556e2754975",
+			"parent": "a45ef281-6c90-4544-9dea-e659a0a02e31",
+			"child": "d743d756-d7f7-48fa-bf6b-99214fb315ad",
 			"c_mp": "true",
 			"c_mch": "true",
 			"c_p": "one",
-			"c_ch": "many",
+			"c_ch": "one",
 			"c_cp": "",
 			"c_cch": "",
 			"cols": [
 				{
-					"id": "96b2b7ae-d65e-48fa-8ac5-e3d2dec16f54",
-					"parentcol": "45cacf7a-336d-4c54-a2e8-6db5785164f8",
-					"childcol": "cee56c3f-e359-4cb9-8e04-fff37ca68200"
+					"id": "d744e2c5-2f12-47c9-b676-f344d1c26627",
+					"parentcol": "c4e01325-a87b-4c14-a305-bbed89e494e2",
+					"childcol": "9d389162-6ef6-4740-9bc7-e78ab0580dd5"
 				}
 			],
 			"generate": true,
@@ -1272,7 +1268,7 @@
 		"def_collation": "",
 		"def_others": "",
 		"connectionVersion": "",
-		"lastSaved": 1724320192555
+		"lastSaved": 1724323289262
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -1290,8 +1286,8 @@
 			"diagramItems": {
 				"8545cfa3-bd2c-46d8-b8aa-816d3fd1e425": {
 					"referencedItemId": "8545cfa3-bd2c-46d8-b8aa-816d3fd1e425",
-					"x": 920,
-					"y": 39,
+					"x": 172,
+					"y": 30,
 					"gHeight": 261,
 					"gWidth": 205,
 					"color": "#ffffff",
@@ -1316,9 +1312,9 @@
 				},
 				"fc439eb3-36fb-4c31-a251-af1e0bb6d97d": {
 					"referencedItemId": "fc439eb3-36fb-4c31-a251-af1e0bb6d97d",
-					"x": 603,
-					"y": 66,
-					"gHeight": 117,
+					"x": 85,
+					"y": 329,
+					"gHeight": 369,
 					"gWidth": 211,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1329,9 +1325,9 @@
 				},
 				"a45ef281-6c90-4544-9dea-e659a0a02e31": {
 					"referencedItemId": "a45ef281-6c90-4544-9dea-e659a0a02e31",
-					"x": 49,
-					"y": 35,
-					"gHeight": 567,
+					"x": 744,
+					"y": 142,
+					"gHeight": 297,
 					"gWidth": 260,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1353,8 +1349,8 @@
 					"backgroundOpacity": "10",
 					"collapsed": false
 				},
-				"c47f2340-c59f-4fe5-89c4-f554d7fab76a": {
-					"referencedItemId": "c47f2340-c59f-4fe5-89c4-f554d7fab76a",
+				"d743d756-d7f7-48fa-bf6b-99214fb315ad": {
+					"referencedItemId": "d743d756-d7f7-48fa-bf6b-99214fb315ad",
 					"x": -1,
 					"y": -1,
 					"gHeight": -1,
@@ -1366,10 +1362,10 @@
 					"backgroundOpacity": "10",
 					"collapsed": false
 				},
-				"ada560f2-f58f-4364-b01d-353ba807ed82": {
-					"referencedItemId": "ada560f2-f58f-4364-b01d-353ba807ed82",
-					"x": -1,
-					"y": -1,
+				"4310aac1-6ad8-42ea-83b0-fb44a4da23f6": {
+					"referencedItemId": "4310aac1-6ad8-42ea-83b0-fb44a4da23f6",
+					"x": 59,
+					"y": 59,
 					"gHeight": -1,
 					"gWidth": -1,
 					"color": "#ffffff",
@@ -1379,10 +1375,10 @@
 					"backgroundOpacity": "10",
 					"collapsed": false
 				},
-				"8314f901-3175-4fa1-8487-996f76b324a7": {
-					"referencedItemId": "8314f901-3175-4fa1-8487-996f76b324a7",
-					"x": -1,
-					"y": -1,
+				"c6979627-9983-41ff-8950-5080d6825e56": {
+					"referencedItemId": "c6979627-9983-41ff-8950-5080d6825e56",
+					"x": 59,
+					"y": 59,
 					"gHeight": -1,
 					"gWidth": -1,
 					"color": "#ffffff",
@@ -1392,10 +1388,10 @@
 					"backgroundOpacity": "10",
 					"collapsed": false
 				},
-				"6a036e94-07e6-4c4f-a274-81b0a1f562a7": {
-					"referencedItemId": "6a036e94-07e6-4c4f-a274-81b0a1f562a7",
-					"x": -1,
-					"y": -1,
+				"30370532-dd3f-424d-9db1-f7668f507365": {
+					"referencedItemId": "30370532-dd3f-424d-9db1-f7668f507365",
+					"x": 59,
+					"y": 59,
 					"gHeight": -1,
 					"gWidth": -1,
 					"color": "#ffffff",
@@ -1405,10 +1401,10 @@
 					"backgroundOpacity": "10",
 					"collapsed": false
 				},
-				"21a582cb-4625-4e4d-95e0-7be4b7cc2667": {
-					"referencedItemId": "21a582cb-4625-4e4d-95e0-7be4b7cc2667",
-					"x": -1,
-					"y": -1,
+				"afd4a1cb-a6bb-47f8-ab43-8f3de8f0dddc": {
+					"referencedItemId": "afd4a1cb-a6bb-47f8-ab43-8f3de8f0dddc",
+					"x": 59,
+					"y": 59,
 					"gHeight": -1,
 					"gWidth": -1,
 					"color": "#ffffff",

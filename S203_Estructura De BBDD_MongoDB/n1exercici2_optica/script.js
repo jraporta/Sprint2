@@ -68,6 +68,67 @@ db.createCollection('glasses', {
         },
         supplier: {
           bsonType: 'objectId'
+        },
+        sales: {
+          bsonType: 'array',
+          items: {
+            title: 'object',
+            required: ['client', 'employee', 'details', 'date'],
+            properties: {
+              client: {
+                bsonType: 'objectId'
+              },
+              employee: {
+                bsonType: 'object',
+                title: 'object',
+                required: ['name'],
+                properties: {
+                  name: {
+                    bsonType: 'string'
+                  },
+                  telephone: {
+                    bsonType: 'string'
+                  }
+                }
+              },
+              details: {
+                bsonType: 'object',
+                title: 'object',
+                properties: {
+                  lens_graduation: {
+                    bsonType: 'object',
+                    title: 'object',
+                    properties: {
+                      right: {
+                        bsonType: 'string'
+                      },
+                      left: {
+                        bsonType: 'string'
+                      }
+                    }
+                  },
+                  lens_color: {
+                    bsonType: 'object',
+                    title: 'object',
+                    properties: {
+                      right: {
+                        bsonType: 'string'
+                      },
+                      left: {
+                        bsonType: 'string'
+                      }
+                    }
+                  },
+                  frame_color: {
+                    bsonType: 'string'
+                  }
+                }
+              },
+              date: {
+                bsonType: 'date'
+              }
+            }
+          }
         }
       }
     }
@@ -124,71 +185,6 @@ db.createCollection('client', {
             bsonType: 'objectId'
           }
         },
-        sales: {
-          bsonType: 'array',
-          items: {
-            title: 'object',
-            required: ['employee', 'date', 'glasses', 'price'],
-            properties: {
-              employee: {
-                bsonType: 'object',
-                title: 'object',
-                required: ['name'],
-                properties: {
-                  name: {
-                    bsonType: 'string'
-                  },
-                  telephone: {
-                    bsonType: 'string'
-                  }
-                }
-              },
-              date: {
-                bsonType: 'date'
-              },
-              glasses: {
-                bsonType: 'object',
-                title: 'object',
-                required: ['model_id'],
-                properties: {
-                  model_id: {
-                    bsonType: 'objectId'
-                  },
-                  lens_graduation: {
-                    bsonType: 'object',
-                    title: 'object',
-                    properties: {
-                      right: {
-                        bsonType: 'string'
-                      },
-                      left: {
-                        bsonType: 'string'
-                      }
-                    }
-                  },
-                  lens_color: {
-                    bsonType: 'object',
-                    title: 'object',
-                    properties: {
-                      right: {
-                        bsonType: 'string'
-                      },
-                      left: {
-                        bsonType: 'string'
-                      }
-                    }
-                  },
-                  frame_color: {
-                    bsonType: 'string'
-                  }
-                }
-              },
-              price: {
-                bsonType: 'decimal'
-              }
-            }
-          }
-        },
         registration_date: {
           bsonType: 'date'
         },
@@ -200,4 +196,4 @@ db.createCollection('client', {
   },
   autoIndexId: true
 });
-Generated: 22 / 8 / 2024 | 12: 43: 32 by Moon Modeler - www.datensen.com
+Generated: 22 / 8 / 2024 | 12: 42: 05 by Moon Modeler - www.datensen.com
