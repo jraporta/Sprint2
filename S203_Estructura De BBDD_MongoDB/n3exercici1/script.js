@@ -155,6 +155,12 @@ db.createCollection('user', {
               status: {
                 enum: "public",
                 "private"
+              },
+              videos: {
+                bsonType: 'array',
+                items: {
+                  bsonType: 'objectId'
+                }
               }
             }
           }
@@ -219,4 +225,4 @@ db.createCollection('comment', {
     }
   }
 });
-Generated: 22 / 8 / 2024 | 14: 34: 59 by Moon Modeler - www.datensen.com
+Generated: 22 / 8 / 2024 | 14: 41: 30 by Moon Modeler - www.datensen.com

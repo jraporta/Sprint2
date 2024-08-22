@@ -284,7 +284,8 @@
 			],
 			"relations": [
 				"4c074e7b-b889-4034-99b3-e65da44fed60",
-				"9a02fd57-1ecf-4391-b4d2-aad140499c90"
+				"9a02fd57-1ecf-4391-b4d2-aad140499c90",
+				"03355ad7-9831-4eab-a28a-d3352720f27b"
 			],
 			"lines": [],
 			"keys": [
@@ -1024,9 +1025,28 @@
 					"estimatedSize": "",
 					"any": "",
 					"fk": false
+				},
+				{
+					"id": "14ae32b7-5b02-4711-9b2e-9cfae72e5369",
+					"name": "videos",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"list": true,
+					"comment": "",
+					"data": "",
+					"enum": "",
+					"validation": "",
+					"pattern": false,
+					"estimatedSize": "",
+					"any": "",
+					"fk": true
 				}
 			],
-			"relations": [],
+			"relations": [
+				"03355ad7-9831-4eab-a28a-d3352720f27b"
+			],
 			"lines": [],
 			"keys": [
 				{
@@ -1436,6 +1456,33 @@
 			"generateCustomCode": true,
 			"customCode": "",
 			"relationColor": "transparent"
+		},
+		"03355ad7-9831-4eab-a28a-d3352720f27b": {
+			"id": "03355ad7-9831-4eab-a28a-d3352720f27b",
+			"visible": true,
+			"name": "video_videos",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "3e72852d-596a-49d2-b7e2-4ded56767061",
+			"parent": "186c7c99-400f-42c6-b1b9-0c566741d6de",
+			"child": "6fb22a47-fd2c-4ba4-9fbe-1170f224d403",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "many",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "c9dce341-b038-40f8-a18c-8ff4b48f5ac5",
+					"parentcol": "9dac18b9-2c0c-4829-a018-5ce2e91a43f1",
+					"childcol": "14ae32b7-5b02-4711-9b2e-9cfae72e5369"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": "",
+			"relationColor": "transparent"
 		}
 	},
 	"notes": {},
@@ -1474,7 +1521,7 @@
 		"def_collation": "",
 		"def_others": "",
 		"connectionVersion": "",
-		"lastSaved": 1724329868017
+		"lastSaved": 1724330074699
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -1507,7 +1554,7 @@
 					"referencedItemId": "717f4460-fdb7-4180-80f4-14a2450665ed",
 					"x": 785,
 					"y": 69,
-					"gHeight": 369,
+					"gHeight": 387,
 					"gWidth": 232,
 					"color": "#ffffff",
 					"background": "#03a9f4",
