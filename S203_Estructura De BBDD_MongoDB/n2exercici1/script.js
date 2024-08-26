@@ -1,44 +1,40 @@
-db.createCollection('client', {
-  validator: {
-    $jsonSchema: {
-      bsonType: 'object',
-      title: 'client',
-      required: ['name', 'surnames', 'address', 'postal_code', 'city', 'province', 'telephone'],
-      properties: {
-        name: {
-          bsonType: 'string'
-        },
-        surnames: {
-          bsonType: 'string'
-        },
-        address: {
-          bsonType: 'string'
-        },
-        postal_code: {
-          bsonType: 'string'
-        },
-        city: {
-          bsonType: 'string'
-        },
-        province: {
-          bsonType: 'string'
-        },
-        telephone: {
-          bsonType: 'int'
-        }
-      }
-    }
-  }
-});
 db.createCollection('order', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
       title: 'order',
-      required: ['client', 'date_creation', 'type', 'note', 'price', 'products', 'paid', 'restaurant'],
+      required: ['client', 'date_creation', 'type', 'note', 'total_price', 'products', 'paid', 'restaurant'],
       properties: {
         client: {
-          bsonType: 'objectId'
+          bsonType: 'object',
+          title: 'object',
+          required: ['client_id', 'name', 'surnames', 'address', 'postal_code', 'city', 'province', 'telephone'],
+          properties: {
+            client_id: {
+              bsonType: 'objectId'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            surnames: {
+              bsonType: 'string'
+            },
+            address: {
+              bsonType: 'string'
+            },
+            postal_code: {
+              bsonType: 'string'
+            },
+            city: {
+              bsonType: 'string'
+            },
+            province: {
+              bsonType: 'string'
+            },
+            telephone: {
+              bsonType: 'int'
+            }
+          }
         },
         date_creation: {
           bsonType: 'date'
@@ -50,20 +46,26 @@ db.createCollection('order', {
         note: {
           bsonType: 'string'
         },
-        price: {
+        total_price: {
           bsonType: 'decimal'
         },
         products: {
           bsonType: 'array',
           items: {
             title: 'object',
-            required: ['product', 'quantity'],
+            required: ['product_id', 'name', 'quantity', 'price'],
             properties: {
-              product: {
+              product_id: {
                 bsonType: 'objectId'
+              },
+              name: {
+                bsonType: 'string'
               },
               quantity: {
                 bsonType: 'int'
+              },
+              price: {
+                bsonType: 'decimal'
               }
             }
           }
@@ -194,4 +196,4 @@ db.createCollection('employee', {
     }
   }
 });
-Generated: 22 / 8 / 2024 | 13: 46: 25 by Moon Modeler - www.datensen.com
+Generated: 26 / 8 / 2024 | 12: 32: 34 by Moon Modeler - www.datensen.com
