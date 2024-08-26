@@ -151,7 +151,16 @@ db.createCollection('user', {
         suscriptions: {
           bsonType: 'array',
           items: {
-            bsonType: 'objectId'
+            title: 'object',
+            required: ['name', 'channel_id'],
+            properties: {
+              name: {
+                bsonType: 'string'
+              },
+              channel_id: {
+                bsonType: 'objectId'
+              }
+            }
           }
         },
         playlists: {
@@ -173,7 +182,19 @@ db.createCollection('user', {
               videos: {
                 bsonType: 'array',
                 items: {
-                  bsonType: 'objectId'
+                  title: 'object',
+                  required: ['video_id', 'name'],
+                  properties: {
+                    video_id: {
+                      bsonType: 'objectId'
+                    },
+                    name: {
+                      bsonType: 'string'
+                    },
+                    thumbnail: {
+                      bsonType: 'string'
+                    }
+                  }
                 }
               }
             }
@@ -270,4 +291,4 @@ db.createCollection('comment_has_likes_and_dislikes', {
     }
   }
 });
-Generated: 26 / 8 / 2024 | 12: 59: 27 by Moon Modeler - www.datensen.com
+Generated: 26 / 8 / 2024 | 13: 06: 20 by Moon Modeler - www.datensen.com
