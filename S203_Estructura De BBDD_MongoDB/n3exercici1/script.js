@@ -3,7 +3,7 @@ db.createCollection('video', {
     $jsonSchema: {
       bsonType: 'object',
       title: 'video',
-      required: ['title', 'size', 'file_name', 'length', 'play_count', 'like_count', 'dislike_count', 'user', 'status', 'comment'],
+      required: ['title', 'size', 'file_name', 'length', 'play_count', 'like_count', 'dislike_count', 'owner', 'status'],
       properties: {
         title: {
           bsonType: 'string'
@@ -32,8 +32,18 @@ db.createCollection('video', {
         dislike_count: {
           bsonType: 'int'
         },
-        user: {
-          bsonType: 'objectId'
+        owner: {
+          bsonType: 'object',
+          title: 'object',
+          required: ['name', 'user_id'],
+          properties: {
+            name: {
+              bsonType: 'string'
+            },
+            user_id: {
+              bsonType: 'objectId'
+            }
+          }
         },
         publish_date: {
           bsonType: 'date'
@@ -49,40 +59,44 @@ db.createCollection('video', {
             bsonType: 'string'
           }
         },
-        likes: {
+        last_comments_overview: {
           bsonType: 'array',
           items: {
             title: 'object',
-            required: ['date', 'user'],
+            required: ['message', 'reply_count', 'like_count', 'dislike_count', 'author', 'date'],
             properties: {
+              comment_id: {
+                bsonType: 'objectId'
+              },
+              message: {
+                bsonType: 'string'
+              },
+              reply_count: {
+                bsonType: 'int'
+              },
+              like_count: {
+                bsonType: 'int'
+              },
+              dislike_count: {
+                bsonType: 'int'
+              },
+              author: {
+                bsonType: 'object',
+                title: 'object',
+                required: ['user_id', 'name'],
+                properties: {
+                  user_id: {
+                    bsonType: 'objectId'
+                  },
+                  name: {
+                    bsonType: 'string'
+                  }
+                }
+              },
               date: {
                 bsonType: 'date'
-              },
-              user: {
-                bsonType: 'objectId'
               }
             }
-          }
-        },
-        dislikes: {
-          bsonType: 'array',
-          items: {
-            title: 'object',
-            required: ['date', 'user'],
-            properties: {
-              date: {
-                bsonType: 'date'
-              },
-              user: {
-                bsonType: 'objectId'
-              }
-            }
-          }
-        },
-        comment: {
-          bsonType: 'array',
-          items: {
-            bsonType: 'objectId'
           }
         }
       }
@@ -174,55 +188,86 @@ db.createCollection('comment', {
     $jsonSchema: {
       bsonType: 'object',
       title: 'comment',
-      required: ['message', 'date', 'user'],
+      required: ['author', 'message', 'date', 'like_count', 'dislike_count', 'video_id', 'reply_count'],
       properties: {
+        author: {
+          bsonType: 'object',
+          title: 'object',
+          required: ['user_id', 'name'],
+          properties: {
+            user_id: {
+              bsonType: 'objectId'
+            },
+            name: {
+              bsonType: 'string'
+            }
+          }
+        },
         message: {
           bsonType: 'string'
         },
         date: {
           bsonType: 'date'
         },
-        responses: {
-          bsonType: 'array',
-          items: {
-            bsonType: 'objectId'
-          }
+        like_count: {
+          bsonType: 'int'
         },
-        user: {
+        dislike_count: {
+          bsonType: 'int'
+        },
+        video_id: {
           bsonType: 'objectId'
         },
-        likes: {
-          bsonType: 'array',
-          items: {
-            title: 'object',
-            required: ['date', 'user'],
-            properties: {
-              date: {
-                bsonType: 'date'
-              },
-              user: {
-                bsonType: 'objectId'
-              }
-            }
-          }
+        reply_to: {
+          bsonType: 'objectId'
         },
-        dislikes: {
-          bsonType: 'array',
-          items: {
-            title: 'object',
-            required: ['date', 'user'],
-            properties: {
-              date: {
-                bsonType: 'date'
-              },
-              user: {
-                bsonType: 'objectId'
-              }
-            }
-          }
+        reply_count: {
+          bsonType: 'int'
         }
       }
     }
   }
 });
-Generated: 22 / 8 / 2024 | 14: 41: 30 by Moon Modeler - www.datensen.com
+db.createCollection('video_has_likes_and_dislikes', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'video_has_likes_and_dislikes',
+      required: ['video_id', 'user_id', 'type'],
+      properties: {
+        video_id: {
+          bsonType: 'objectId'
+        },
+        user_id: {
+          bsonType: 'objectId'
+        },
+        type: {
+          enum: "like",
+          "dislike"
+        }
+      }
+    }
+  }
+});
+db.createCollection('comment_has_likes_and_dislikes', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'comment_has_likes_and_dislikes',
+      required: ['comment_id', 'user_id', 'type'],
+      properties: {
+        comment_id: {
+          bsonType: 'objectId'
+        },
+        user_id: {
+          bsonType: 'objectId'
+        },
+        type: {
+          enum: "like",
+          "dislike"
+        }
+      }
+    }
+  }
+});
+Generated: 26 / 8 / 2024 | 12: 59: 27 by Moon Modeler - www.datensen.com
