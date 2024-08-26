@@ -55,18 +55,20 @@ db.createCollection('glasses', {
     $jsonSchema: {
       bsonType: 'object',
       title: 'glasses',
-      required: ['brand', 'frame_type', 'supplier'],
+      required: ['brand', 'frame_type', 'supplier_id'],
       properties: {
         brand: {
           bsonType: 'string'
         },
         frame_type: {
-          enum:
+          enum: "Plastic",
+          "Metallic",
+          "Frameless"
         },
         price: {
           bsonType: 'decimal'
         },
-        supplier: {
+        supplier_id: {
           bsonType: 'objectId'
         }
       }
@@ -79,7 +81,7 @@ db.createCollection('client', {
     $jsonSchema: {
       bsonType: 'object',
       title: 'client',
-      required: ['name', 'sale', 'registration_date', 'recommended_by'],
+      required: ['name', 'registration_date', 'recommended_by'],
       properties: {
         name: {
           bsonType: 'string'
@@ -118,41 +120,33 @@ db.createCollection('client', {
         email: {
           bsonType: 'string'
         },
-        sale: {
-          bsonType: 'array',
-          items: {
-            bsonType: 'objectId'
-          }
-        },
-        sales: {
+        last_ four_sales_overview: {
           bsonType: 'array',
           items: {
             title: 'object',
-            required: ['employee', 'date', 'glasses', 'price'],
+            required: ['date', 'glasses', 'price', 'sale_id'],
             properties: {
-              employee: {
-                bsonType: 'object',
-                title: 'object',
-                required: ['name'],
-                properties: {
-                  name: {
-                    bsonType: 'string'
-                  },
-                  telephone: {
-                    bsonType: 'string'
-                  }
-                }
-              },
               date: {
                 bsonType: 'date'
               },
               glasses: {
                 bsonType: 'object',
                 title: 'object',
-                required: ['model_id'],
+                required: ['model_id', 'brand', 'frame_type'],
                 properties: {
                   model_id: {
                     bsonType: 'objectId'
+                  },
+                  brand: {
+                    bsonType: 'string'
+                  },
+                  frame_type: {
+                    enum: "Plastic",
+                    "Metallic",
+                    "Frameless"
+                  },
+                  frame_color: {
+                    bsonType: 'string'
                   },
                   lens_graduation: {
                     bsonType: 'object',
@@ -177,14 +171,14 @@ db.createCollection('client', {
                         bsonType: 'string'
                       }
                     }
-                  },
-                  frame_color: {
-                    bsonType: 'string'
                   }
                 }
               },
               price: {
                 bsonType: 'decimal'
+              },
+              sale_id: {
+                bsonType: 'objectId'
               }
             }
           }
@@ -200,4 +194,74 @@ db.createCollection('client', {
   },
   autoIndexId: true
 });
-Generated: 22 / 8 / 2024 | 12: 43: 32 by Moon Modeler - www.datensen.com
+db.createCollection('sale', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'sale',
+      required: ['employee', 'date', 'glasses1', 'price'],
+      properties: {
+        employee: {
+          bsonType: 'object',
+          title: 'object',
+          required: ['employee_id', 'name'],
+          properties: {
+            employee_id: {
+              bsonType: 'objectId'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            telephone: {
+              bsonType: 'string'
+            }
+          }
+        },
+        date: {
+          bsonType: 'date'
+        },
+        glasses1: {
+          bsonType: 'object',
+          title: 'object',
+          required: ['model_id'],
+          properties: {
+            model_id: {
+              bsonType: 'objectId'
+            },
+            lens_graduation: {
+              bsonType: 'object',
+              title: 'object',
+              properties: {
+                right: {
+                  bsonType: 'string'
+                },
+                left: {
+                  bsonType: 'string'
+                }
+              }
+            },
+            lens_color: {
+              bsonType: 'object',
+              title: 'object',
+              properties: {
+                right: {
+                  bsonType: 'string'
+                },
+                left: {
+                  bsonType: 'string'
+                }
+              }
+            },
+            frame_color: {
+              bsonType: 'string'
+            }
+          }
+        },
+        price: {
+          bsonType: 'decimal'
+        }
+      }
+    }
+  }
+});
+Generated: 26 / 8 / 2024 | 12: 02: 45 by Moon Modeler - www.datensen.com
