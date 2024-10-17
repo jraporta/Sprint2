@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`localidad` (
   `localidad_id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `provincia_id` INT NOT NULL,
-  PRIMARY KEY (`localidad_id`, `provincia_id`),
+  PRIMARY KEY (`localidad_id`),
   INDEX `fk_localidad_provincia1_idx` (`provincia_id` ASC) VISIBLE,
   CONSTRAINT `fk_localidad_provincia1`
     FOREIGN KEY (`provincia_id`)
@@ -58,9 +58,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`cliente` (
     FOREIGN KEY (`localidad_id`)
     REFERENCES `n1exercici2_pizzeria`.`localidad` (`localidad_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `chk_telefono_cliente` CHECK (`telefono` REGEXP '^[0-9]{9}$'),
-  CONSTRAINT `chk_codigo_postal_cliente` CHECK (`codigo_postal` REGEXP '^[0-9]{5}$'))
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -78,8 +76,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`tienda` (
     FOREIGN KEY (`localidad_id`)
     REFERENCES `n1exercici2_pizzeria`.`localidad` (`localidad_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `chk_codigo_postal_tienda` CHECK (`codigo_postal` REGEXP '^[0-9]{5}$'))
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -94,15 +91,13 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`trabajador` (
   `telefono` VARCHAR(9) NOT NULL,
   `puesto` ENUM('cocinero', 'repartidor') NOT NULL,
   `tienda_id` INT NOT NULL,
-  PRIMARY KEY (`trabajador_id`, `tienda_id`),
+  PRIMARY KEY (`trabajador_id`),
   INDEX `fk_trabajador_tienda1_idx` (`tienda_id` ASC) VISIBLE,
   CONSTRAINT `fk_trabajador_tienda1`
     FOREIGN KEY (`tienda_id`)
     REFERENCES `n1exercici2_pizzeria`.`tienda` (`tienda_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `chk_telefono_trabajador` CHECK (`telefono` REGEXP '^[0-9]{9}$'),
-  CONSTRAINT `chk_nif_trabajador` CHECK (`nif` REGEXP '^[0-9]{8}[A-Z]$' OR `nif` REGEXP '^[A-Z][0-9]{7}[A-Z]$'))
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -118,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `n1exercici2_pizzeria`.`pedido` (
   `tienda_id` INT NOT NULL,
   `trabajador_id` INT NULL,
   `fecha_hora_entrega` DATETIME NULL,
-  PRIMARY KEY (`pedido_id`, `cliente_id`, `tienda_id`),
+  PRIMARY KEY (`pedido_id`),
   INDEX `fk_pedido_trabajador1_idx` (`trabajador_id` ASC) VISIBLE,
   INDEX `fk_pedido_cliente1_idx` (`cliente_id` ASC) VISIBLE,
   INDEX `fk_pedido_tienda1_idx` (`tienda_id` ASC) VISIBLE,
@@ -203,7 +198,7 @@ FOR EACH ROW
 BEGIN
 	IF (NEW.tipo <> 'reparto' AND (NEW.trabajador_id IS NOT NULL OR NEW.fecha_hora_entrega IS NOT NULL)) THEN
 		SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'trabajador_id y fecha de entrega solo asignables a pedidos de reparto';
+		SET MESSAGE_TEXT = 'trabajador_id y feha de entrega solo permitidas para productos de reparto';
 	END IF;
 END;$$
 
