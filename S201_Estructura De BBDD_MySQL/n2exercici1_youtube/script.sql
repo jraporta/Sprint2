@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `n2exercici1_youtube`.`video` (
   `publish_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `status` ENUM('public', 'private', 'unlisted') NULL,
   `owner_id` INT NOT NULL,
-  PRIMARY KEY (`video_id`, `owner_id`),
+  PRIMARY KEY (`video_id`),
   INDEX `fk_user_idx` (`owner_id` ASC) VISIBLE,
   CONSTRAINT `fk_user`
     FOREIGN KEY (`owner_id`)
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `n2exercici1_youtube`.`channel` (
   `description` VARCHAR(500) NULL,
   `dateOfCreation` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `owner_id` INT NOT NULL,
-  PRIMARY KEY (`channel_id`, `owner_id`),
+  PRIMARY KEY (`channel_id`),
   INDEX `fk_user1_idx` (`owner_id` ASC) VISIBLE,
   CONSTRAINT `fk_user1`
     FOREIGN KEY (`owner_id`)
@@ -143,7 +143,6 @@ CREATE TABLE IF NOT EXISTS `n2exercici1_youtube`.`video_has_likes_and_dislikes` 
   PRIMARY KEY (`video_id`, `user_id`),
   INDEX `fk_user3_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_video2_idx` (`video_id` ASC) VISIBLE,
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_video2`
     FOREIGN KEY (`video_id`)
     REFERENCES `n2exercici1_youtube`.`video` (`video_id`)
@@ -166,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `n2exercici1_youtube`.`playlist` (
   `dateOfCreation` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `status` ENUM('public', 'private') NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`playlist_id`, `user_id`),
+  PRIMARY KEY (`playlist_id`),
   INDEX `fk_user4_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user4`
     FOREIGN KEY (`user_id`)
@@ -207,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `n2exercici1_youtube`.`video_has_comments` (
   `dateOfCreation` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `video_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`comment_id`, `video_id`, `user_id`),
+  PRIMARY KEY (`comment_id`),
   INDEX `fk_video4_idx` (`video_id` ASC) VISIBLE,
   INDEX `fk_user5_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_video4`
