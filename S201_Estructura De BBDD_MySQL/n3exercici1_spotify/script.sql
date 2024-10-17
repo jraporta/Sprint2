@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`subscription` (
   `date_of_renovation` DATETIME NULL,
   `payment_method` ENUM('paypal', 'credit_card') NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`subscription_id`, `user_id`),
+  PRIMARY KEY (`subscription_id`),
   INDEX `fk_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user1`
     FOREIGN KEY (`user_id`)
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`credit_card` (
   `year` INT NOT NULL,
   `cvv` VARCHAR(3) NOT NULL,
   `subscription_id` INT NOT NULL,
-  PRIMARY KEY (`credit_card_id`, `subscription_id`),
+  PRIMARY KEY (`credit_card_id`),
   INDEX `fk_subscription_details1_idx` (`subscription_id` ASC) VISIBLE,
   CONSTRAINT `fk_subscription_details1`
     FOREIGN KEY (`subscription_id`)
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`paypal` (
   `paypal_id` INT NOT NULL,
   `user` VARCHAR(45) NOT NULL,
   `subscription_id` INT NOT NULL,
-  PRIMARY KEY (`paypal_id`, `subscription_id`),
+  PRIMARY KEY (`paypal_id`),
   INDEX `fk_subscription_details2_idx` (`subscription_id` ASC) VISIBLE,
   CONSTRAINT `fk_subscription_details2`
     FOREIGN KEY (`subscription_id`)
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`payment` (
   `order_number` INT NOT NULL,
   `total` DECIMAL(4,2) NOT NULL,
   `user_id` INT NOT NULL,
-  PRIMARY KEY (`payment_id`, `user_id`),
+  PRIMARY KEY (`payment_id`),
   UNIQUE INDEX `order_number_UNIQUE` (`order_number` ASC) VISIBLE,
   INDEX `fk_user2_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user2`
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`playlist` (
   `user_id` INT NOT NULL,
   `deleted` TINYINT NOT NULL DEFAULT 0 COMMENT 'possible values:\n0 = \'not deleted\'\n1 = \'deleted\'',
   `date_of_deletion` DATETIME NULL,
-  PRIMARY KEY (`playlist_id`, `user_id`),
+  PRIMARY KEY (`playlist_id`),
   INDEX `fk_user3_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user3`
     FOREIGN KEY (`user_id`)
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`album` (
   `artist_id` INT NOT NULL,
   `year_published` INT NOT NULL,
   `cover` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`album_id`, `artist_id`),
+  PRIMARY KEY (`album_id`),
   INDEX `fk_artist1_idx` (`artist_id` ASC) VISIBLE,
   CONSTRAINT `fk_artist1`
     FOREIGN KEY (`artist_id`)
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`song` (
   `duration` INT NULL,
   `times_played` INT NULL,
   `album_id` INT NOT NULL,
-  PRIMARY KEY (`song_id`, `album_id`),
+  PRIMARY KEY (`song_id`),
   INDEX `fk_album1_idx` (`album_id` ASC) VISIBLE,
   CONSTRAINT `fk_album1`
     FOREIGN KEY (`album_id`)
@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `spotify`.`playlist_has_song` (
   `song_id` INT NOT NULL,
   `date_added` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `added_by_user_id` INT NOT NULL,
-  PRIMARY KEY (`playlist_id`, `song_id`, `added_by_user_id`),
+  PRIMARY KEY (`playlist_id`, `song_id`),
   INDEX `fk_song1_idx` (`song_id` ASC) VISIBLE,
   INDEX `fk_playlist1_idx` (`playlist_id` ASC) VISIBLE,
   INDEX `fk_user4_idx` (`added_by_user_id` ASC) VISIBLE,
@@ -209,9 +209,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `spotify`.`related_artists`
+-- Table `spotify`.`artist_has_related_artists`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `spotify`.`related_artists` (
+CREATE TABLE IF NOT EXISTS `spotify`.`artist_has_related_artists` (
   `artist1_id` INT NOT NULL,
   `artist2_id` INT NOT NULL,
   PRIMARY KEY (`artist1_id`, `artist2_id`),
@@ -253,9 +253,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `spotify`.`user_favorite_songs`
+-- Table `spotify`.`user_has_favorite_songs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `spotify`.`user_favorite_songs` (
+CREATE TABLE IF NOT EXISTS `spotify`.`user_has_favorite_songs` (
   `user_id` INT NOT NULL,
   `song_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `song_id`),
@@ -275,9 +275,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `spotify`.`user_favorite_albums`
+-- Table `spotify`.`user_has_favorite_albums`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `spotify`.`user_favorite_albums` (
+CREATE TABLE IF NOT EXISTS `spotify`.`user_has_favorite_albums` (
   `user_id` INT NOT NULL,
   `album_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `album_id`),
