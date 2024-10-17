@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`marca` (
   `marca_id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `proveedor_id` INT NOT NULL,
-  PRIMARY KEY (`marca_id`, `proveedor_id`),
+  PRIMARY KEY (`marca_id`),
   INDEX `fk_proveedor1_idx` (`proveedor_id` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor1`
     FOREIGN KEY (`proveedor_id`)
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`gafas` (
   `color_derecho` VARCHAR(20) NULL,
   `color_izquierdo` VARCHAR(20) NULL,
   `precio` FLOAT NULL,
-  PRIMARY KEY (`gafas_id`, `marca_id`),
+  PRIMARY KEY (`gafas_id`),
   INDEX `fk_marca1_idx` (`marca_id` ASC) VISIBLE,
   CONSTRAINT `fk_marca1`
     FOREIGN KEY (`marca_id`)
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `n1_exercici1_optica`.`venta` (
   `gafas_gafas_id` INT NOT NULL,
   `cliente_id` INT NOT NULL,
   `empleado_id` INT NOT NULL,
-  PRIMARY KEY (`venta_id`, `gafas_gafas_id`, `cliente_id`, `empleado_id`),
+  PRIMARY KEY (`venta_id`),
   INDEX `fk_venta_gafas1_idx` (`gafas_gafas_id` ASC) VISIBLE,
   INDEX `fk_cliente1_idx` (`cliente_id` ASC) VISIBLE,
   INDEX `fk_empleado1_idx` (`empleado_id` ASC) VISIBLE,
